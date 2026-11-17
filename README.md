@@ -1,101 +1,146 @@
-# KieDex Auto Bot
+# KieDex Bot
 
-Automated bot for **KieDex** Trade-to-Earn platform — daily faucet, social tasks, and trade execution.
+**Versi:** 1.0.0 · **Harga:** Rp 120.000 (~$8) · **Kontak pembelian:** [@rmndkyl](https://t.me/rmndkyl)
+
+Automated bot for KieDex Trade-to-Earn platform. Daily faucet, bonus, social tasks, and trade execution.
+
+## Kebutuhan
+
+| Item | Detail |
+|---|---|
+| Runtime | Node.js 18+ |
+| Wallet | EVM / sesuai chain proyek (kamu sendiri) |
+| Proxy | opsional (1 proxy per akun) |
+| Captcha | tidak perlu |
+| Akses | akun proyek yang kamu kelola sendiri |
+
+## Pembayaran
+
+E-Wallet: DANA / GoPay / ShopeePay · Bank: BCA / Seabank · Crypto: contact for wallet address.
+Pembeli menghubungi [@rmndkyl](https://t.me/rmndkyl), kirim bukti transfer, lalu terima license key.
+
+---
+
+🌐 **Website:** https://kiedex.app
 
 ## Features
 
-- 🚰 Daily USDT Faucet Claim (100 USDT)
-- ⛽ Daily OIL Bonus Claim (40 OIL)
-- 📋 15 Social Tasks Auto-Complete (Repost, Follow, Join)
-- 📈 Auto Trade Execution (BTC/USDT futures, 1x-50x leverage)
-- 👥 Multi-Account Support
-- 🌐 Proxy Support (Monosans Free / Private / None)
-- 🔄 Token Auto-Refresh (Supabase JWT)
-- ⏰ Daily Auto-Run Mode (`--daily`)
-
-## How It Works
-
-KieDex uses Supabase backend with Google OAuth authentication. The bot:
-1. Refreshes expired tokens automatically
-2. Claims daily USDT faucet (100 USDT testnet)
-3. Claims daily OIL bonus (40 OIL trading fuel)
-4. Completes all 15 social tasks (Twitter repost, CMC follow, Discord/Telegram join, etc.)
-5. Executes a BTC/USDT long trade with calculated TP/SL
-6. Repeats daily
+- Daily USDT Faucet Claim (100 USDT)
+- Daily OIL Bonus Claim (40 OIL)
+- 15 Social Tasks Auto-Complete (Repost, Follow, Join)
+- Auto Trade Execution (BTC/USDT futures)
+- Multi-Account Support
+- Proxy Support (Monosans Free / Private / None)
+- Token Auto-Refresh
 
 ## Requirements
 
 - Node.js v16+
-- Google account signed into [KieDex](https://kiedex.app)
+- Google account signed into KieDex
 
 ## Setup
 
-```bash
-git clone https://github.com/layerairdrop/kiedex-bot.git
-cd kiedex-bot
-npm install
-node auth.js      # Add your account tokens
-node index.js     # Run the bot
-```
+1. Clone this repo
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Get your tokens (see below)
+4. Run the bot:
+   ```bash
+   node index.js          # Interactive mode
+   node index.js --daily  # Daily auto-run mode
+   ```
 
 ## Getting Tokens
 
-1. Open https://kiedex.app → Sign In with Google
-2. DevTools (F12) → Application → Local Storage → kiedex.app
-3. Copy `access_token` and `refresh_token` from Supabase auth
-4. Run `node auth.js` and paste tokens
+1. Open https://kiedex.app in Chrome
+2. Sign In with Google
+3. Open DevTools (F12) → Application → Local Storage → kiedex.app
+4. Find the Supabase auth token (key starting with `sb-`)
+5. Copy `access_token` and `refresh_token`
+6. Run: `node auth.js` and paste the tokens
+
+Alternative (Network tab):
+1. Sign in to KieDex
+2. DevTools → Network → filter "token"
+3. Find request to supabase.co/auth/v1/token
+4. Copy tokens from response
+
+## Configuration
+
+Edit `config.json`:
+- `delay_min` / `delay_max`: Delay between accounts (ms)
+- `retry_count`: Number of retries on failure
+- `trade_leverage`: Trade leverage (default: 1x)
+- `trade_tp_percent`: Take profit percentage (default: 5%)
+- `trade_sl_percent`: Stop loss percentage (default: 2%)
 
 ## Proxy Modes
 
-| Mode | Description |
-|------|-------------|
-| Monosans | Free proxies (auto-fetched) |
-| Private | Your own proxies in proxy.txt |
-| None | Direct connection |
+1. Monosans Free Proxy (auto-fetched)
+3. No Proxy (direct connection)
 
-## Pricing
+## Files
 
-| Plan | Price |
-|------|-------|
-| Single License | $5 / Rp 80.000 |
-| Bundle (3 scripts) | Rp 155.000 (20% off) |
-| Pro Bundle (all scripts) | Rp 370.000 (30% off) |
+```
+kiedex-bot/
+├── index.js          # Main entry point
+├── auth.js           # Token setup helper
+├── config.json       # Configuration
+├── tokens.json       # Account tokens (auto-created)
+├── src/
+│   ├── api.js        # Supabase REST API wrapper
+│   ├── auth.js       # Token management
+│   └── tasks.js      # Task execution logic
+├── utils/
+│   ├── banner.js     # LYID banner
+│   ├── logger.js     # Colored logger
+│   ├── proxy.js      # Proxy manager
+│   └── utils.js      # Helpers
+└── package.json
+```
 
-## Purchase
+## Notes
 
-Contact [@rmndkyl](https://t.me/rmndkyl) on Telegram.
-
-**Payment Methods:**
-- **E-Wallet (ID):** DANA / GoPay / ShopeePay
-- **Bank Transfer (ID):** BCA / Seabank
-- **Crypto (USDT/SOL):** Contact for wallet address
-- EVM + Solana wallets (ask for address)
-
-## Other Scripts
-
-| Bot | Project | Price |
-|-----|---------|-------|
-| canopy-bot | Canopy Network | $5 / Rp 80K |
-| simplechain-bot | SimpleChain | $4 / Rp 65K |
-| watt2trade-bot | Watt2Trade | $4 / Rp 65K |
-| uponly-bot | UpOnly | $6 / Rp 95K |
-| afyniti-bot | Afyniti | $4 / Rp 65K |
-| orbition-bot | Orbition Network | $4 / Rp 65K |
-| unicity-bot | Unicity Network | $6 / Rp 95K |
-| **kiedex-bot** | **KieDex** | **$5 / Rp 80K** |
-
-**Bundle Pricing:**
-- Starter (3 pick): Rp 155.000 (20% off)
-- Pro (all 8): Rp 370.000 (30% off)
-- VIP (monthly access): Rp 200.000/bulan
+- KieDex uses Supabase backend (PostgreSQL + REST API)
+- Auth is Google OAuth via Supabase (standard JWT, no wallet signature needed)
+- Wallet connection is for display only, not required for bot operations
+- Trade uses demo/testnet USDT + OIL as fee credits
+- No captcha required
 
 ## Contact
 
-- Telegram: [@rmndkyl](https://t.me/rmndkyl)
-- Channel: [@layerairdrop](https://t.me/layerairdrop)
-- Group: [@layerairdropdiskusi](https://t.me/layerairdropdiskusi)
-- GitHub: [github.com/rmndkyl](https://github.com/rmndkyl)
+- Telegram: @rmndkyl
+- Channel: https://t.me/layerairdrop
+- Group: https://t.me/layerairdropdiskusi
 
-## Disclaimer
+## License
 
-This bot is for educational purposes. Use at your own risk. The author is not responsible for any losses.
+Free and open source. Do not believe in the paid version.
+
+## 💰 Harga
+
+| Lisensi | Harga | Fitur |
+|---------|-------|-------|
+| **Single** | Rp 120.000 / ~$8 | 1 device, lifetime |
+| **Bundle (3 bot)** | Rp 120.000 / ~$16 | Pilih 3 bot, hemat 20% |
+| **Pro (semua bot)** | Rp 120.000 / ~$70 | Semua bot + update, hemat 30% |
+
+**Cara beli:** Chat [@OG_LYID_bot](https://t.me/OG_LYID_bot) di Telegram → /buy
+
+**Bayar pakai:**
+- 🇮🇩 DANA / GoPay / ShopeePay / BCA / Seabank
+- 🌐 Crypto (USDT/SOL/ETH)
+
+## 🔧 Troubleshooting
+
+| Masalah | Solusi |
+|---------|--------|
+| `Cannot find module` | Jalankan `npm install` di folder bot |
+| `insufficient balance` | Pastikan wallet punya cukup token untuk gas |
+| `429 Too Many Requests` | Tunggu 30-60 detik, bot auto-retry |
+| Bot diam/tidak jalan | Cek `config.json` — pastikan API key valid |
+| License invalid | Chat [@OG_LYID_bot](https://t.me/OG_LYID_bot) → /verify |
+
+**Butuh bantuan?** Join [Discord](https://discord.gg/ZK2NVkfSNn) atau chat [@layerairdrop](https://t.me/layerairdrop)
